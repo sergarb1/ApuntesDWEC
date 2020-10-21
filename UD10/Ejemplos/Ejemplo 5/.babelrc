@@ -1,0 +1,13 @@
+{
+    "presets": [
+      ["@babel/preset-env", {
+        "targets": {
+          "node": "current"
+          //"firefox": "71"
+          //"ie": "6"
+        }
+      }]
+    ]
+  }
+// Usan sintacis browserl.ist
+// Ejemplo consultar https://browserl.ist/?q=IE+6

@@ -1,0 +1,60 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+  <script>
+
+    function inicio(){
+      // Recuperamos el chat del localStorage
+      
+      let nuestroChat = document.getElementById("nuestroChat");
+      nuestroChat.innerHTML = localStorage.getItem("chat");
+
+    }
+
+    // Funcion que recibe un texto y devuelve el mismo texto escapando el HTML
+    // utilizada para evitar ataques XSS
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    
+    // Funcion que recoge elementos del formulario (usuario y mensaje) y con ellos
+    // anayade una entrada al chat
+    function enviar() {
+      let usuario=escapeHtml(document.getElementById("usuario").value);
+      let mensaje=escapeHtml(document.getElementById("mensaje").value);      
+      let nuestroChat = document.getElementById("nuestroChat");
+
+      nuestroChat.innerHTML = "<p>" + escapeHtml(usuario + " : " + mensaje) + "</p>" + nuestroChat.innerHTML;
+
+
+      // Guardamos en localStorage
+      localStorage.setItem("chat",nuestroChat.innerHTML);
+    }
+
+  </script>
+
+
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body onload="inicio()">
+  <p>Usuario <input type="text" id="usuario" /></p>
+  <p>Mensaje <input type="text" id="mensaje" /> </p>
+  <p><input type="button" id="enviar" value="Enviar" onclick="enviar();" /></p>
+  <p>FakeChat</p>
+  <div id="nuestroChat"></div>
+</body>
+
+
+</html>
