@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <select id="select">
+        <option value="">Elige una opción</option>
+        <option value="get">Hacer una consulta</option>
+        <option value="post">Hacer una escritura</option>
+    </select>
+    <div id='divGET' hidden>
+        <p>Introduzca el número de post a consultar:</p>
+        <input type="text" id="txtGET" placeholder="Ej: 1">
+        <button id="btnGET">Consultar</button>
+        <p>La consulta se hace por GET</p>
+    </div>
+    <div id='divPOST' hidden>
+        <p>Introduce el cuerpo de un nuevo post:</p>
+        <input type="text" id="txtPOST" placeholder="Ej: BlaBlaBla">
+        <button id="btnPOST">Subir nuevo post</button>
+        <p>Utiliza POST para crear una nueva entrada ficticia en la BD. Como es una creación, contesta con status=201 y
+            una
+            copia del objeto creado. </p>
+        <p>Ojo, que la creación es ficticia, no se puede consultar</p>
+    </div>
+    <hr>
+
+    <div id="div"></div>
+</body>
+
+</html>
