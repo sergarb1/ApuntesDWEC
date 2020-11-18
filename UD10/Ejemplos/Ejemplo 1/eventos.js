@@ -1,7 +1,7 @@
 "use strict";
 // Funcion que recoge elementos del formulario (usuario y mensaje) y con ellos
 // anayade una entrada al chat
-function enviar() {
+function enviarMensaje() {
   let usuario = escapeHtml(document.getElementById("usuario").value);
   let mensaje = escapeHtml(document.getElementById("mensaje").value);
   let nuestroChat = document.getElementById("nuestroChat");
