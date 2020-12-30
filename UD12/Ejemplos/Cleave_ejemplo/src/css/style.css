@@ -1,0 +1,49 @@
+input, a {
+    width: 80%;
+    display: block;
+    outline: none;
+    -webkit-appearance: none;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    background-color: #fff;
+    line-height: 30px;
+    vertical-align: middle;
+    height: 33px;
+    font-size: 14px;
+    padding: 0 8px;
+}
+
+.input-numeral {
+    text-align: right;
+}
+
+.right {
+    text-align: right;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+p {
+    margin: 0;
+    padding: 0 0 5px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+section {
+    margin-bottom: 15px;
+    width: 50%;
+    float: left;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    background: #bbb;
+    border-color: #bbb;
+    display: block;
+    font-size: 14px;
+    text-align: center;
+}

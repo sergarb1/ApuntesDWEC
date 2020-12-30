@@ -1,0 +1,1 @@
+webpackHotUpdate(1,{36:function(n,a){window.onload=function(){new GMaps({el:"#map",lat:48.857,lng:2.295}).drawOverlay({lat:48.857,lng:2.295,content:'<div style="background-color:green">La X indica el tesoro</div>'})}}});

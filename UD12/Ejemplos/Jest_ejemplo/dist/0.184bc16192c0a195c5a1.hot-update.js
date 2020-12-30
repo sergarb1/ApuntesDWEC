@@ -1,0 +1,1 @@
+webpackHotUpdate(0,{34:function(n,t,e){"use strict";e.r(t);var i=e(35);window.onload=function(){document.getElementById("miDiv").innerHTML=Object(i.suma)(4,5)}},35:function(n,t){}});

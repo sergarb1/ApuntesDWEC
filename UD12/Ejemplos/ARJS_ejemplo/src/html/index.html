@@ -1,0 +1,32 @@
+
+<!doctype HTML>
+<html>
+<!-- IMPORTANTE: PARA MOVILES DEBE ESTAR EN UN SERVIDOR QUE SEA HTTPS PORQUE SINO LOS NAVEGADORES
+NO DEJAN CARGAR LA CAMARA
+CON WEBPACK EN LOCAL Y FIREFOX FUNCIONA Ok
+-->
+
+<!-- Incluimos las bibliotecas de realidad aumentada-->
+<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
+<body style='margin : 0px; overflow: hidden;'>
+    <!-- Definimos la escena (donde tiene lugar la Realidad aumentada -->
+    <a-scene embedded arjs>
+      <!-- Cargamos los recursos de nuestra escena-->
+      <a-assets>
+        <!-- cargamos a Pikachu! -->
+        <a-asset-item id="pikachu" src="scene.gltf">
+      </a-assets>
+      <!-- Establecemos un marcador hiro, obtenido en hiro.jpg o en
+      https://jeromeetienne.github.io/AR.js/data/images/HIRO.jpg
+      -->
+      <a-marker preset="hiro">
+        <!-- Hacemos que cuando se detecte ese marcador, se vea a Pikachu-->
+        <a-gltf-model src="#pikachu" scale="0.1 0.1 0.1" rotation="-70 0 0"></a-gltf-model>
+      </a-marker>
+      <!-- Establecemos la entidad de la camara de la realidad virtual-->
+      <a-entity camera ></a-entity>
+    </a-scene>
+  </body>
+</html>
