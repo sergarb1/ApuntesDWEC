@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Carrito de la compra - Supermercado Online</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<div class="container" id="app">
+		<!-- Usamos v-show, analogo a la propiedad css display. Mostrarlo dependera de si el usuario esta o no validado-->
+		<div class="c-login" v-show="!login.validado">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12">
+						<h2 class="text-center">Bienvenido a "Supermercado Online"</h2>
+						<!-- Aqui se altera la clase del div segun el valor de login.mensaje.clase y tambien se muestra texto de login-->
+						<div class="alert" :class="'alert-' + login.mensaje.clase">
+							<p>{{ login.mensaje.texto }}</p>
+						</div>
+						<!-- en caso de submit, no se hace y se ejecuta "validarUsuario" -->
+						<form action="" @submit.prevent="validarUsuario">
+							<div class="form-group">
+								<label for="" class="control-label">Usuario:</label>
+								<div class="controls">
+									<!-- Enlazamos el input con login.usuario mediante v-model -->
+									<input type="text" class="form-control" required v-model="login.usuario" autofocus>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="control-label">Contraseña:</label>
+								<div class="controls">
+									<!-- Enlazamos el input con login.contrasena mediante v-model -->
+									<input type="password" class="form-control" required v-model="login.contrasena">
+								</div>
+							</div>
+							<div class="text-right form-group">
+								<button type="submit" class="btn btn-primary">Login</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+				<!-- Mediante login.usuario indicamos a quien estamos facturando -->
+				<h1 class="text-left">
+					Carrito de la compra <small>({{ login.usuario }})</small>
+					<span class="pull-right">
+						<!-- Asociamos click a que haga que login.validado valga false, para "salir de la sesion" -->
+						<button class="btn btn-danger btn-xs" @click="login.validado = false">Terminar la
+							sesión</button>
+					</span>
+				</h1>
+				<div class="form-group">
+					<label for="" class="control-label">Producto:</label>
+					<!-- Hacemos que el select se enlace con facturacion.productoSeleccionado.producto -->
+					<!-- Asociamos el evento change a que se llame a la funcion "infoProductoSeleccionado" -->
+					<select class="form-control" v-model="facturacion.productoSeleccionado.producto"
+						@change="infoProductoSeleccionado">
+						<option value="">-- Seleccionar --</option>
+						<!-- Mediante v-for ante cada elemento del conjunto de productos, modificamos el value del option con el producto yellow
+						el texto del option con su descripcion -->
+						<option v-for="producto in productos" :value="producto.producto">
+							{{ producto.descripcion }}
+						</option>
+					</select>
+				</div>
+				<!-- Panel ligado a mostrarse con v-show a que la variable "facturacion.productoSeleccionado.producto" no este vacia -->
+				<div class="panel panel-default" v-show="facturacion.productoSeleccionado.producto != ''">
+					<div class="panel-heading">
+						<h3 class="panel-title">Información del producto seleccionado</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<!-- Mostramos datos del productoSeleccionado -->
+							<div class="col-sm-10">
+								<p>
+									<strong>Código: </strong> {{ facturacion.productoSeleccionado.producto || '' }}
+								</p>
+								<p>
+									<strong>Descripción: </strong> {{ facturacion.productoSeleccionado.descripcion || ''
+									}}
+								</p>
+								<p>
+									<strong>Precio: </strong> {{ facturacion.productoSeleccionado.precio || '' }}
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="panel-footer">
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="" class="control-label">Cantidad:</label>
+							</div>
+							<div class="col-sm-6">
+								<!-- Con v-model enlazamos este inputo a "facturacion.productoSeleccionado.cantidad" -->
+								<input type="number" min="1" v-model="facturacion.productoSeleccionado.cantidad"
+									class="form-control col-sm-6 input-sm" required>
+							</div>
+							<div class="col-sm-3 text-right">
+								<!-- Al hacer click, llamamos a agregarLinea -->
+								<button class="btn btn-primary" @click="agregarLinea">Agregar</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<hr>
+				<div class="table-responsive">
+					<table class="table table-hover table-striped">
+						<thead>
+							<tr>
+								<th>Código</th>
+								<th>Descripción</th>
+								<th>Precio</th>
+								<th>Cantidad</th>
+								<th>Total</th>
+								<th>&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-show="!facturacion.productosAgregados.length">
+								<td colspan="6">
+									<p class="text-center">
+										<em>
+											No se han agregado productos a la factura actual
+										</em>
+									</p>
+								</td>
+							</tr>
+							<!-- Medienta v-for, sacamos elemento,indice del conjunto facturacion.productosAgregados 
+							y mostramos su información-->
+							<tr v-for="(linea, indice) in facturacion.productosAgregados">
+								<td>{{ linea.producto }}</td>
+								<td>{{ linea.descripcion }}</td>
+								<td>{{ linea.precio }}</td>
+								<td width="100">
+									<input type="number" min="1" class="form-control input-sm" v-model="linea.cantidad">
+								</td>
+								<!-- Mostramos precio total con una operacion aritmetica -->
+								<td>{{linea.cantidad * linea.precio }}</td>
+								<td class="text-right">
+									<!-- Hacer click llama a eliminarLinea con el indice de este elemento -->
+									<button class="btn btn-xs btn-danger" title="Eliminar línea"
+										@click="eliminarLinea(indice)">&times;</button>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5" class="text-left">
+									<strong>Total de la compra:</strong>
+								</td>
+								<!-- para mostrar el total de todas las compras, mostramos la propiedad "computed" llamada totalLineas -->
+								<td>
+									<strong>{{ totalLineas }}</strong>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Biblioteca Vue 2 modo desarrollo, para poder depurar. Quitar en produccion y descomentar la correcta 
+  Permite depuración con https://github.com/vuejs/vue-devtools
+  NOTA: También puedes decargarla en local y enlazarla -->
+	<script src="https://vuejs.org/js/vue.js"></script>
+
+
+	<!-- Biblioteca Vue 2 modo producción. Quitar modo desarrollo y descomentar esta en produccion
+  NOTA: si tu aplicación es offline, puedes descargarla e incluirla. Si no, es recomendable usar CDN
+  porque sus archivos estan cacheados por los ISP y navegadores, por lo cual su acceso es más rápido
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   -->
+
+	<!-- Adjuntamos nuestro Javascript de nuestra aplicación Vue 2 -->
+	<script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Directiva v-html en Vue</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+</head>
+
+<body>
+	<div class="row">
+		<div class="col-sm-12 text-center">
+			<h3>La directiva v-html de Vue</h3>
+			<h2>Editor HTML básico</h2>
+			<hr>
+		</div>
+	</div>
+	<div class="row" id="app">
+		<div class="col-sm-6">
+			<div class="alert alert-default">
+				Puedes probar cualquier etiqueta HTML para ver el resultado renderizado.
+			</div>
+			<!-- con v-model asociamos el valor del textarea a la la variable codigo -->
+			<textarea cols="30" rows="10" v-model="codigo" class="form-control"></textarea>
+		</div>
+		<div class="col-sm-6">
+			<!-- Mostramos como HTML el contenido de la variable codigo con v-html https://vuejs.org/v2/guide/syntax.html#Raw-HTML -->
+			<div v-html="codigo"></div>
+		</div>
+	</div>
+
+
+	<!-- Biblioteca Vue 2 modo desarrollo, para poder depurar. Quitar en produccion y descomentar la correcta 
+  Permite depuración con https://github.com/vuejs/vue-devtools
+  NOTA: También puedes decargarla en local y enlazarla -->
+	<script src="https://vuejs.org/js/vue.js"></script>
+
+
+	<!-- Biblioteca Vue 2 modo producción. Quitar modo desarrollo y descomentar esta en produccion
+  NOTA: si tu aplicación es offline, puedes descargarla e incluirla. Si no, es recomendable usar CDN
+  porque sus archivos estan cacheados por los ISP y navegadores, por lo cual su acceso es más rápido
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   -->
+
+	<!-- Adjuntamos nuestro Javascript de nuestra aplicación Vue 2 -->
+	<script src="main.js"></script>
+</body>
+
+</html>

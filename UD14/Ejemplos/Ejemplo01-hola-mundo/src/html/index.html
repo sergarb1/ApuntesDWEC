@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Hola mundo con Vue.js</title>
+</head>
+
+<body>
+	<!-- Contenedor de la aplicacion Vue (el id coincide con el atributo el: '#miApp' de la aplicacion -->
+	<div id="miApp">
+		<!-- Se muestra el valor del mensaje -->
+		<p>{{ message }}</p>
+		<!-- asociamos al evento click del boton el ejecutar la funcion reverseMessage -->
+		<button v-on:click="reverseMessage">Invertir mensaje</button>
+		<input type="text" v-model="message" />
+	</div>
+
+
+	<!-- Biblioteca Vue 2 modo desarrollo, para poder depurar. Quitar en produccion y descomentar la correcta 
+  Permite depuración con https://github.com/vuejs/vue-devtools
+  NOTA: También puedes decargarla en local y enlazarla -->
+	<script src="https://vuejs.org/js/vue.js"></script>
+
+
+	<!-- Biblioteca Vue 2 modo producción. Quitar modo desarrollo y descomentar esta en produccion
+  NOTA: si tu aplicación es offline, puedes descargarla e incluirla. Si no, es recomendable usar CDN
+  porque sus archivos estan cacheados por los ISP y navegadores, por lo cual su acceso es más rápido
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   -->
+
+	<!-- Adjuntamos nuestro Javascript de nuestra aplicación Vue 2 -->
+	<script src="main.js"></script>
+</body>
+
+</html>

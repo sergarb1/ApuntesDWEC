@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Simulación chat entre dos usuarios</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<div class="container" id="app">
+		<div class="row">
+			<div class="col-sm-9">
+				<h3>Simulación de chat entre dos usuarios con Vue</h2>
+				<hr>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<!-- previene el envio del formulario, y en su lugar llama a la funcion publicarMensaje con el valor "izquierda" -->
+				<form @submit.prevent="publicarMensaje('izquierda')">
+					<div class="form-group">
+						<!-- la propiedad disabled depende del valor de usuarios.izquierda.mensajesVacios -->
+						<button type="submit" class="btn btn-xs btn-primary pull-right"
+						:disabled="usuarios.izquierda.mensajesVacios >= limiteMensajesVacios">Enviar</button>
+						<label for="" class="control-label">
+							<!-- Mostramos los mensajes enviados -->
+							<span class="badge" title="Mensajes enviados">
+								{{  usuarios.izquierda.mensajesEnviados }}
+							</span>
+							
+							<!-- Mostramos  el nombre -->
+							{{ usuarios.izquierda.nombre }}
+						</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<!-- la propiedad src de la img (la ruta) depende del valor de usuarios.izquierda.avatar -->
+								<img :src="usuarios.izquierda.avatar"
+								alt="Avatar" height="60">
+							</span>
+							<!-- 
+							Asociamos el valor del textarea a "nuevoMensaje.izquierda"
+							Se captura el evento de soltar "enter" y se llama a publicarMensaje con el parametro 'izquierda' -->
+							<textarea rows="3" class="form-control" v-model="nuevoMensaje.izquierda"
+							@keyup.enter="publicarMensaje('izquierda')"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-sm-12">
+				<ul class="list-unstyled conversacion" id="conversacion">
+					<li class="text-center">
+						<div class="label label-warning">
+							Oops..! Esta conversaci&oacute;n ficticia no est&aacute; cifrada ;-)
+						</div>
+					</li>
+					<!-- Se repite para cada mensaje en "mensajes"
+					Se elige una clase segun si el mensaje es "izquierda" o de "derecha" -->
+					<li v-for="mensaje in mensajes"
+					:class="{'text-right': mensaje.posicion == 'derecha'}">
+						<span class="mensaje"
+						:class="'mensaje-' + mensaje.posicion"
+						:title="mensaje.fecha">
+							{{ mensaje.contenido }}
+						</span>
+					</li>
+				</ul>
+			</div>
+			<!-- Equivalente al anterior pero usando "derecha" en lugar de "izquierda" como parametro !-->
+			<div class="col-sm-12">
+				<form @submit.prevent="publicarMensaje('derecha')">
+					<div class="form-group">
+						<label for="" class="control-label">
+							<span class="badge" title="Mensajes enviados">
+								{{  usuarios.derecha.mensajesEnviados }}
+							</span>
+							{{ usuarios.derecha.nombre }}
+						</label>
+						<div class="input-group">
+							<textarea rows="3" class="form-control"
+							v-model="nuevoMensaje.derecha"
+							@keyup.enter="publicarMensaje('derecha')"></textarea>
+							<span class="input-group-addon">
+								<img :src="usuarios.derecha.avatar"
+								alt="Avatar" height="60">
+							</span>
+						</div>
+					</div>
+					<div class="text-right">
+					
+						<button type="submit" class="btn btn-xs btn-primary"
+						:disabled="usuarios.derecha.mensajesVacios >= limiteMensajesVacios">Enviar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<h3>Data (para depuración)
+					<span class="pull-right">
+						<!-- Asocia al clic del boton el llamar a la funcion borrar -->
+						<button class="btn btn-xs btn-danger"
+						@click="borrar">Borrar mensajes y contadores</button>
+					</span>
+				</h3>
+				<!-- Muestra los valores de $data (de nuestra aplicacion VUE) en formato JSON -->
+				<code>
+					{{ $data || json }}
+				</code>
+			</div>
+		</div>
+	</div>
+
+	<!-- Biblioteca Vue 2 modo desarrollo, para poder depurar. Quitar en produccion y descomentar la correcta 
+  Permite depuración con https://github.com/vuejs/vue-devtools
+  NOTA: También puedes decargarla en local y enlazarla -->
+	<script src="https://vuejs.org/js/vue.js"></script>
+
+
+	<!-- Biblioteca Vue 2 modo producción. Quitar modo desarrollo y descomentar esta en produccion
+  NOTA: si tu aplicación es offline, puedes descargarla e incluirla. Si no, es recomendable usar CDN
+  porque sus archivos estan cacheados por los ISP y navegadores, por lo cual su acceso es más rápido
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   -->
+
+	<!-- Adjuntamos nuestro Javascript de nuestra aplicación Vue 2 -->
+	<script src="main.js"></script>
+</body>
+
+</html>

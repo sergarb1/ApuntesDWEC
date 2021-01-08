@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Consumir API con Vue y Axios</title>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 text-center">
+				<h3>Utilizando Axios</h3>
+				<h2>Consumir REST API con Vue y Axios</h2>
+				<hr>
+			</div>
+		</div>
+		<!-- Contenedor de la aplicación VUE-->
+		<div class="row" id="app">
+			<table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nombre</th>
+						<th>Usuario</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- Bucle que recorrer el contenido de usuarios, que se alimenta de la API https://vuejs.org/v2/guide/list.html#v-for-with-a-Range -->
+					<tr v-for="usuario in usuarios">
+						<td>{{ usuario.id }}</td>
+						<td>{{ usuario.name }}</td>
+						<td>{{ usuario.username }}</td>
+						<td>{{ usuario.email }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- Incluimos biblioteca de Axios-->
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+	
+	<!-- Biblioteca Vue 2 modo desarrollo, para poder depurar. Quitar en produccion y descomentar la correcta 
+  Permite depuración con https://github.com/vuejs/vue-devtools
+  NOTA: También puedes decargarla en local y enlazarla -->
+	<script src="https://vuejs.org/js/vue.js"></script>
+
+
+	<!-- Biblioteca Vue 2 modo producción. Quitar modo desarrollo y descomentar esta en produccion
+  NOTA: si tu aplicación es offline, puedes descargarla e incluirla. Si no, es recomendable usar CDN
+  porque sus archivos estan cacheados por los ISP y navegadores, por lo cual su acceso es más rápido
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   -->
+
+	<!-- Adjuntamos nuestro Javascript de nuestra aplicación Vue 2 -->
+	<script src="main.js"></script>
+</body>
+
+</html>

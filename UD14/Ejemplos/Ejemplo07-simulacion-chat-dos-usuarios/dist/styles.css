@@ -1,0 +1,73 @@
+textarea{
+	resize: vertical;
+}
+
+#app{
+	width: 45%;
+	margin: 20px auto;
+}
+	@media(max-width: 768px){
+		#app{
+			width: initial;
+		}
+	}
+
+.mensaje{
+	position: relative;
+	padding: 8px;
+	margin: 4px;
+	display: inline-block;
+	color: #fff;
+	font-size: .9em;
+}
+	.mensaje:after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		width: 0;
+		height: 0;
+		margin-top: -8px;
+	}
+	.mensaje.mensaje-izquierda{
+		background: #41B883 !important;
+	}
+		.mensaje.mensaje-izquierda:after{
+			left: 0;
+			border: 8px solid transparent;
+			border-right-color: #41B883;
+			border-left: 0;
+			margin-left: -8px;
+		}
+
+	.mensaje.mensaje-derecha{
+		background: #35495E;
+	}
+		.mensaje.mensaje-derecha:after {
+			right: 0;
+			border: 8px solid transparent;
+			border-left-color: #35495E;
+			border-right: 0;
+			margin-right: -8px;
+		}
+
+		.mensaje.mensaje-centro{
+			background: #feccc1;
+			color: red;
+		}
+
+	.mensaje p{
+		margin: 0;
+	}
+
+.conversacion{
+	padding: 10px;
+	height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+	background: #f1f1f1;
+	resize: vertical;
+}
+
+.conversacion li:last-child{
+	margin-bottom: 50px;
+}

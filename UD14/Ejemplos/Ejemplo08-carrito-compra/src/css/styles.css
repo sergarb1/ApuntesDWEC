@@ -1,0 +1,31 @@
+.c-login{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1001;
+	background: #fff;
+}
+
+.c-login .container{
+    position: absolute;
+    width: 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border: solid 1px #ccc;
+    border-radius: 3px;
+    box-shadow: 1px 1px 10px #f1f1f1;
+}
+
+@media (max-width: 768px){
+    .c-login .container{
+        position: relative;
+        width: 100%;
+        left: 0;
+        top: 0;
+        transform: none;
+    }
+}

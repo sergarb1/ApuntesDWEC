@@ -1,0 +1,72 @@
+*{
+	border-radius: 0 !important;
+}
+
+h1{
+	margin-top: 0;
+}
+
+#app{
+	margin: 50px auto;
+}
+
+img.foto-artista{
+	filter: grayscale(100%);
+	width: 100%;
+}
+
+img.portada-disco{
+	filter: grayscale(100%);
+	transition: all 1s;
+	width: 100%;
+	margin-bottom: 15px;
+}
+	img.portada-disco:hover{
+		filter: grayscale(0);
+	}
+
+.panel-default{
+	border: 0;
+	box-shadow: none;
+}
+
+.panel-default .panel-footer{
+    background: none;
+    border-color: #f1f1f1;
+}
+
+@media(max-width: 768px){
+    .panel-default .panel-footer{
+        text-align: right;
+        padding-right: 0;
+    }
+}
+
+.thumbnail{
+	padding: 0;
+	border: 0;
+}
+
+.thumbnail .caption{
+    padding: 15px 0 0;
+}
+
+.modal.nuevo-artista{
+	display: block;
+	background: rgba(53, 73, 94, .2);
+}
+
+.modal.nuevo-artista .modal-content{
+    box-shadow: none;
+    border: 0;
+}
+
+.c-no-encontrado{
+	margin-top: 200px;
+}
+
+@media(max-width: 768px){
+    .c-no-encontrado{
+        margin-top: 50px;
+    }
+}
