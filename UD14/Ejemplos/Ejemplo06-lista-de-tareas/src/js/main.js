@@ -23,7 +23,7 @@ let app = new Vue({
     },
     eliminarTarea: function (tarea) {
       // Busca el indice de la tarea y la elimina del array de tareas
-      var indice = this.tareas.indexOf(tarea);
+      let indice = this.tareas.indexOf(tarea);
 
       this.tareas.splice(indice, 1);
     }

@@ -1,1 +1,0 @@
-webpackHotUpdate(0,{34:function(o,a){new Vue({el:"#app",data:{codigo:["<h1>Hola mundo</h1>",'<div class="alert alert-success">',"Editor HTML básico con Vue","</div>"].join("")}})}});

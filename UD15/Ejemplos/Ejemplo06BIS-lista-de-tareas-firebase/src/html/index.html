@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Lista de tareas con Vue</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+
+	<!-- Importamos el CDN de Firebase y Firestore-->
+	<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
+
+
+</head>
+
+<body>
+	<div class="container" id="app">
+		<div class="row">
+			<div class="col-sm-12 text-center">
+				<h2>Lista de tareas con Vue y Firebase (Firestore)</h2>
+				<hr>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<!-- Si se envia el formulario, se previene el envio (no se envia, evitando recargan de la pagina y llama a "agregarTarea" -->
+				<form @submit.prevent="agregarTarea">
+					<div class="form-group">
+						<label for="nombre_tarea" class="control-label">Nombre de la tarea:</label>
+						<div class="input-group">
+							<!-- Enlazamos el input con v-model a "nuevaTarea" -->
+							<input type="text" class="form-control" id="nombre_tarea"
+								placeholder="Escriba el nombre de la tarea a añadir" v-model="nuevaTarea"
+								autofocus autocomplete="off" maxlength="50">
+
+							<!-- Primero recordar que el metodo trim es Javascript elimina espacios tanto a izquierda como a derecha
+							https://www.w3schools.com/jsref/jsref_trim_string.asp
+							-->
+
+							<span class="input-group-btn">
+								<!-- el valor de la propiedad disabled va enlazado a que exista una cadena en nuevaTarea (una vez hecho trim)
+								NOTA: Pulsar este boton implica enviar el formulario, aunque arriba se captura el envio
+								-->
+								<button class="btn btn-default" :disabled="!nuevaTarea.trim()">Agregar</button>
+							</span>
+						</div>
+					</div>
+				</form>
+				<!-- el valor de la propiedad class va enlazado a que exista una cadena en nuevaTarea (una vez hecho trim)-->
+				<div class="alert " :class="{'alert-info' : !nuevaTarea.trim(), 'alert-warning' : nuevaTarea.trim()}">
+					<!-- esto se muestra si el v-if se cumple https://v1.vuejs.org/guide/conditional.html -->
+					<p v-if="!nuevaTarea.trim()">
+						Por favor, introduzca el nombre de la nueva tarea.
+						<span class="label label-danger">El nombre no puede estar vac&iacute;o.</span>
+					</p>
+					<!-- Si no se cumple el v-if , se aplica el v-else-->
+					<p v-else>
+						Usted esta escribiendo una tarea.
+						<!-- Muestra la longitud de nuevaTarea con los {{ }} -->
+						<span class="label label-default">
+							Longitud: {{ nuevaTarea.trim().length }}
+						</span>
+					</p>
+				</div>
+				<!-- Mostrarse o no depende del valor v-show (analogo a la propiedad display) https://vuejs.org/v2/guide/conditional.html#v-show -->
+				<div class="alert alert-success" v-show="mensajeTareaAgregada">
+					<!-- Enlace que genera la X. Coge el evento antes de ejecutarse con @click.prevent, evitando su propagacion
+					e invierte el valor de "mensajeTareaAgregada"
+					-->
+					<a href="#" class="close" @click.prevent="mensajeTareaAgregada = !mensajeTareaAgregada">&times;</a>
+					<p>La nueva tarea se añadido correctamente.</p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<!-- Mostrarse o no depende del valor v-show (analogo a la propiedad display) https://vuejs.org/v2/guide/conditional.html#v-show -->
+				<p class="text-center" v-show="!tareas.length">
+					<em>Su lista de tareas est&aacute; vac&iacute;a.</em>
+				</p>
+				<ul class="list-group" v-show="tareas.length">
+					<!-- Se muestra un li por cada tarea en el conjunto "tareas" v-for https://vuejs.org/v2/guide/list.html#v-for-with-a-Range 
+					La propiedad "title" se genera dinamicamente con la propiedad "fecha" de cada tarea
+					-->
+					<li v-for="tarea in tareas" class="list-group-item" :title="'Fecha de la tarea: ' + tarea.fecha">
+						<div class="checkbox">
+							<label>
+								<!-- Se enlaza este checkbox al valor de la propiedad "finalizada" de cada tarea -->
+								<input type="checkbox" v-model="tarea.finalizada" @click="actualizarEstadoTareaFinalizada(tarea)">
+								<!-- el style y clases de este span depende del valor de la tarea finalizada.
+								Como texto, muesta el nombre de la tarea-->
+								<span :style="[tarea.finalizada ? {textDecoration: 'line-through'} : '']"
+									:class="{'text-muted': tarea.finalizada}">
+									{{ tarea.nombre }}
+								</span>
+							</label>
+							<!-- asociamos a click la llamada a eliminarTarea con la tarea actual -->
+							<button class="btn btn-danger btn-xs pull-right"
+								@click="eliminarTarea(tarea)">&times;</button>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Biblioteca Vue 2 modo desarrollo, para poder depurar. Quitar en produccion y descomentar la correcta 
+  Permite depuración con https://github.com/vuejs/vue-devtools
+  NOTA: También puedes decargarla en local y enlazarla -->
+	<script src="https://vuejs.org/js/vue.js"></script>
+
+
+	<!-- Biblioteca Vue 2 modo producción. Quitar modo desarrollo y descomentar esta en produccion
+  NOTA: si tu aplicación es offline, puedes descargarla e incluirla. Si no, es recomendable usar CDN
+  porque sus archivos estan cacheados por los ISP y navegadores, por lo cual su acceso es más rápido
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   -->
+
+	<!-- Adjuntamos nuestro Javascript de nuestra aplicación Vue 2 -->
+	<script src="main.js"></script>
+</body>
+
+</html>

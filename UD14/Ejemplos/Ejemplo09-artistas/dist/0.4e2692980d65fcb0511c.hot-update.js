@@ -1,1 +1,0 @@
-webpackHotUpdate(0,{8:function(t,o){t.exports={data:()=>({datos:{}}),methods:{obtenerInfo:function(){var t=this.$route.params.artista,o=datosJSON.artistas.find((function(o){return o.id==t}));o||this.$router.push("/"),this.datos=o}},created:function(){this.obtenerInfo()},watch:{$route:function(t,o){this.obtenerInfo()}}}}});

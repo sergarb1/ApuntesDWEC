@@ -1,1 +1,0 @@
-webpackHotUpdate(0,{34:function(o,a){new Vue({el:"#app",data:{botonesPequenos:!0,colorCaja:"color-verde",desactivar:!0},methods:{cambiarColor:function(o){this.colorCaja="color-"+o},cambiarEstadoBotones:function(){this.desactivar=!this.desactivar}}})}});

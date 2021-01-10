@@ -1,1 +1,0 @@
-webpackHotUpdate(0,{34:function(e,o){new Vue({el:"#app",data:{usuarios:[]},created:function(){axios.get("https://jsonplaceholder.typicode.com/users").then((function(e){console.log(e),this.usuarios=e.data}))}})}});
