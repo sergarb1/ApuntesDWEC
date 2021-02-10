@@ -15,6 +15,6 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
-    "no-tabs": 0
+    'no-tabs': 0
   }
 }

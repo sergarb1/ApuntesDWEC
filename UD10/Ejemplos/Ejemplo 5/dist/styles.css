@@ -1,0 +1,19 @@
+html, body{
+    height: 100%;
+}
+body{
+    margin: 0;
+}
+
+div {
+    height: 100%;
+    background-color: #2eb398;
+    color: white;
+    font-size: 18px;
+}
+
+p {
+    text-align: justify;
+    margin-top: auto;
+    margin-bottom: auto;
+}
