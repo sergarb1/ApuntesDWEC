@@ -1,7 +1,6 @@
-import {suma} from  "./suma.js";
+import { suma } from "./suma.js";
 
-window.onload = function(){
-
-    let miDiv=document.getElementById("miDiv");
-    miDiv.innerHTML=suma(4,5);
+window.onload = function () {
+  const miDiv = document.getElementById("miDiv");
+  miDiv.innerHTML = suma(4, 5);
 }
