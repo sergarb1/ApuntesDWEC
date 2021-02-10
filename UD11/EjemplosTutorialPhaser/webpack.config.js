@@ -1,11 +1,8 @@
 const path = require('path');
-
 const CopyPlugin = require('copy-webpack-plugin');
-
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
-
-  // Configurado para multiples entradas y multples salidas
   entry: {
     './part1': './src/js/part1.js',
     './part2': './src/js/part2.js',
@@ -15,21 +12,20 @@ module.exports = {
     './part6': './src/js/part6.js',
     './part7': './src/js/part7.js',
     './part8': './src/js/part8.js',
-    './part9': './src/js/part9.js',
+    './part9': './src/js/part9.js'
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist')
   },
-
   mode: 'production',
-  //devtool: 'eval-source-map',
+  // devtool: 'eval-source-map',
   devServer: {
-    publicPath: "/",
+    publicPath: '/',
     hot: true,
     contentBase: path.resolve(__dirname, 'dist'),
     watchContentBase: true, // Mira cambios en /dist
-    writeToDisk: true,
+    writeToDisk: true
   },
   module: {
     rules: [
@@ -47,9 +43,9 @@ module.exports = {
       [
         { from: 'src/html', to: './', force: true }, // Cogen la direccion destino de contentBase
         { from: 'src/css', to: './', force: true },
-        // Los assets los copiamos a la carpeta assets
-        { from: 'src/assets', to: './assets', force: true },
+        { from: 'src/assets', to: './assets', force: true }
       ]
     ),
-  ],
-};
+    new ESLintPlugin()
+  ]
+}
