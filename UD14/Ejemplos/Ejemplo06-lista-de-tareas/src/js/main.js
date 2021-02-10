@@ -1,5 +1,12 @@
+/* global Vue */
+/* La línea anterior es para que no de error al no encontrar la variable Vue,
+obtenida a través de un CDN */
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "app" }] */
+/* La línea anterior es para que no de error al no usarse la variable app */
+"use strict";
+
 // Declaramos la aplicación VUE
-let app = new Vue({
+const app = new Vue({
   // Indicamos el ID del Div que contiene la APP Vue
   el: '#app',
   data: {
@@ -23,24 +30,23 @@ let app = new Vue({
     },
     eliminarTarea: function (tarea) {
       // Busca el indice de la tarea y la elimina del array de tareas
-      let indice = this.tareas.indexOf(tarea);
+      const indice = this.tareas.indexOf(tarea);
 
       this.tareas.splice(indice, 1);
     }
   },
   // Cuando se crea el Vue, cargamos los datos de localStorage
   created: function () {
-    if (localStorage.getItem('tareas'))
-      this.tareas = JSON.parse(localStorage.getItem('tareas'));
+    if (localStorage.getItem('tareas')) { this.tareas = JSON.parse(localStorage.getItem('tareas')); }
   },
   // anyadimos un watcher de tareas. Hacemos que cada cambio se guarde en localStorage
   // importante poner deep:true para que asi coja los cambios en todas las propiedades anidadas
   watch: {
     tareas: {
-      handler() {
+      handler () {
         localStorage.setItem('tareas', JSON.stringify(this.tareas));
       },
-      deep: true,
-    },
-  },
+      deep: true
+    }
+  }
 });
