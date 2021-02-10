@@ -14,7 +14,10 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module'
   },
+  // Reglas incluidas para adaptar ESLint a mi estilo respecto a 'standard'
   rules: {
-    'no-tabs': 0
+    'no-tabs': 0,
+    semi: 0,
+    quotes: [0]
   }
 }
